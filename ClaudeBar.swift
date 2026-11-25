@@ -1,4 +1,4 @@
-// UsageBar: menu bar readout of Claude plan limits (5-hour, weekly, per-model weekly).
+// ClaudeBar: menu bar readout of Claude plan limits (5-hour, weekly, per-model weekly).
 // ponytail: uses the undocumented /api/oauth/usage endpoint with Claude Code's Keychain token; may break on Anthropic updates.
 import AppKit
 
