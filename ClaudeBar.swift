@@ -50,7 +50,7 @@ func ring(percent: Int, stale: Bool) -> NSImage {
     }
 }
 
-final class App: NSObject, NSApplicationDelegate {
+final class App: NSObject, NSApplicationDelegate, NSMenuDelegate {
     let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     var limits: [Limit] = [], status = "Loading…", updated: Date?
 
@@ -90,21 +90,35 @@ final class App: NSObject, NSApplicationDelegate {
         }.resume()
     }
 
+    var updatedRow: NSMenuItem?
+
+    func updatedText() -> String {
+        guard let updated else { return "" }
+        let secs = Date().timeIntervalSince(updated)
+        return "Updated " + (secs < 60 ? "just now" : RelativeDateTimeFormatter().localizedString(for: updated, relativeTo: Date()))
+    }
+
+    func menuWillOpen(_ menu: NSMenu) { updatedRow?.title = updatedText() }
+
     func show(status: String?) {
         self.status = status ?? ""
-        // Ring = the most-used limit; percentages live in the click menu. Gray ring = no data / stale.
-        let worst = limits.map(\.percent).max()
+        // Menu bar ring = the 5-hour limit (falls back to the most-used one); each menu row gets its own ring.
+        let main = limits.first { $0.label == "5h" }?.percent ?? limits.map(\.percent).max()
         item.button?.title = ""
-        item.button?.image = ring(percent: worst ?? 0, stale: worst == nil || status != nil)
+        item.button?.image = ring(percent: main ?? 0, stale: main == nil || status != nil)
         item.button?.toolTip = limits.map { "\($0.label) \($0.percent)%" }.joined(separator: " · ")
 
         let menu = NSMenu(), rel = RelativeDateTimeFormatter()
+        menu.autoenablesItems = false // info rows have no action; keep them full-contrast instead of grayed out
         for l in limits {
             let reset = l.resetsAt.map { "resets " + rel.localizedString(for: $0, relativeTo: Date()) } ?? ""
-            menu.addItem(withTitle: "\(l.label): \(l.percent)%   \(reset)", action: nil, keyEquivalent: "")
+            let row = menu.addItem(withTitle: "\(l.label): \(l.percent)%   \(reset)", action: nil, keyEquivalent: "")
+            row.image = ring(percent: l.percent, stale: status != nil)
         }
         if let status, !status.isEmpty { menu.addItem(withTitle: status, action: nil, keyEquivalent: "") }
-        if let updated { menu.addItem(withTitle: "Updated " + rel.localizedString(for: updated, relativeTo: Date()), action: nil, keyEquivalent: "") }
+        updatedRow = updated == nil ? nil : menu.addItem(withTitle: updatedText(), action: nil, keyEquivalent: "")
+        updatedRow?.isEnabled = false // secondary text
+        menu.delegate = self
         menu.addItem(.separator())
         menu.addItem(withTitle: "Refresh", action: #selector(refresh), keyEquivalent: "r").target = self
         menu.addItem(withTitle: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
