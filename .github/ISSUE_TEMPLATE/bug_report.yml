@@ -1,0 +1,42 @@
+name: Bug report
+description: Something in ClaudeBar doesn't work the way it should
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for testing ClaudeBar. **Found a security vulnerability? Don't file it here** — report it privately under Security → Report a vulnerability.
+        Please remove tokens and account details from anything you paste.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what you saw instead. Include the message shown in ClaudeBar's menu, if any.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Run ./install.sh
+        2. Click the ring
+        3. See …
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: e.g. 71a5cd7
+  - type: input
+    id: env
+    attributes:
+      label: macOS version and Claude plan
+      placeholder: e.g. macOS 26.1, Max
+  - type: textarea
+    id: logs
+    attributes:
+      label: Output or screenshots
+      description: Output of `--print` or `./install.sh`, or a screenshot of the menu bar, with secrets removed.
+      render: text

@@ -40,4 +40,10 @@ swiftc -O ClaudeBar.swift -o /tmp/ClaudeBar && /tmp/ClaudeBar --selftest   # par
 /tmp/ClaudeBar --print                                                      # one live fetch, printed
 ```
 
-Not affiliated with Anthropic.
+## Contributing
+
+Bug reports, ideas and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md). Report security issues privately as described in [SECURITY.md](SECURITY.md).
+
+## License
+
+[Apache 2.0](LICENSE) © 2026 Ahmed Hegazi. Not affiliated with Anthropic.

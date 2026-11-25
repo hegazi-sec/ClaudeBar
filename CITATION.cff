@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use ClaudeBar in your tools or publications, please cite it as below."
+type: software
+title: "ClaudeBar"
+abstract: >
+  A tiny open-source macOS menu bar app that shows how much of your Claude
+  plan you've used. A colored ring follows your most-used limit, and its menu
+  lists the 5-hour, weekly and per-model weekly limits with reset times.
+  Built from source in one Swift file with no dependencies.
+authors:
+  - family-names: "Hegazi"
+    given-names: "Ahmed"
+    alias: hegazi-sec
+repository-code: "https://github.com/hegazi-sec/ClaudeBar"
+url: "https://github.com/hegazi-sec/ClaudeBar"
+license: Apache-2.0
+version: "1.0.0"
+date-released: "2026-11-25"
+keywords:
+  - macOS
+  - menu bar
+  - Swift
+  - AppKit
+  - Anthropic Claude
+  - Claude Code
+  - usage limits
+  - rate limits
+  - open source
