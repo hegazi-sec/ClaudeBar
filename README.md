@@ -13,7 +13,7 @@ Works with Claude Pro, Max and Team plans when you're signed in to Claude Code. 
 Needs macOS 13 or later and Apple's free command line tools (the script offers to install them).
 
 ```sh
-git clone https://github.com/<you>/usagebar.git
+git clone https://github.com/hegazi-sec/usagebar.git
 cd usagebar
 ./install.sh
 ```
